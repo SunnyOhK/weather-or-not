@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Weather or Not</title>
+
+    <!-- Bootstrap CDN link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Font Awesome link -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="container-fluid bg-dark text-light mb-5 p-3">
+        <div class="row justify-content-around">
+            <h1 class="col-4">Weather or Not</h1>
+            <h3 class="col-4">Multi-City Weather Outlook</h3>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-fluid">
+
+            <div class="row justify-content-around">
+                <!-- SET COLUMNS WITHIN A ROW FOR SEARCH BAR AND CONTENT -->
+                <div class="card text-center col-3" style="width: 18rem; height: 48rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Search for a City</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend"></div>
+                            <input type="text" class="form-control" placeholder="Search" aria-label="search"
+                                aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn" id="search-btn" type="button" style="width: 100%;">Search</button>
+                        </div><br>
+                        <hr>
+                        </hr>
+                    </div>
+
+
+
+                </div>
+                <div class="col-.5"></div>
+                <div class="col-8.5">
+                    <div class="card" id="weather-now" style="width: 70rem; height: 16rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">City Name</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's
+                                content.</p>
+                        </div>
+                    </div>
+
+                    <!-- SET 5 HORIZONTAL CARDS FOR FORECAST -->
+                    <div class="row">
+                        <div class="card" id="forecast-box" style="width: 14rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Date +1</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's
+                                    content.</p>
+                            </div>
+                        </div>
+                        <div class="card" id="forecast-box" style="width: 14rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Date +2</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's
+                                    content.</p>
+                            </div>
+                        </div>
+                        <div class="card" id="forecast-box" style="width: 14rem; height: 20rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Date +3</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's
+                                    content.</p>
+                            </div>
+                        </div>
+                        <div class="card" id="forecast-box" style="width: 14rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Date +4</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's
+                                    content.</p>
+                            </div>
+                        </div>
+                        <div class="card" id="forecast-box" style="width: 14rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Date +5</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's
+                                    content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Moment.js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- Local JS file -->
+    <script src="/assets/js/script.js"></script>
+</body>
+
+</html>
