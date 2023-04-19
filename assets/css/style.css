@@ -1,0 +1,25 @@
+:root {
+    --grey-blue: #404F64;
+    --periwinkle: #8F99FB;
+    --lt-grey: #7b7b7b;
+
+}
+
+#forecast-box {
+    background-color: var(--grey-blue);
+    color: white;
+}
+
+#search-btn {
+    background-color: var(--periwinkle);
+    color: white;
+}
+
+#weather-now {
+    padding-right: 20rem;
+}
+
+hr {
+    border-bottom: 2px var(--lt-grey);
+    color: var(--lt-grey);
+}
