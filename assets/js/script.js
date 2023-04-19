@@ -1,20 +1,55 @@
 // var tableBody = document.getElementById('repo-table');
-// var fetchButton = document.getElementById('fetch-button');
 
-function getApi() {
-    // fetch request gets a list of all the repos for the node.js organization
-    var requestUrl = 'api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
+var fetchBtn = document.getElementById('fetch-btn');
 
-    fetch(requestUrl)
+var cities = [];
+
+var searchCardEl = document.querySelector("#search-card");
+var inputCity = document.querySelector("#city");
+var citySearchInputEl = document.querySelector("#searched-city");
+var forecastTitle = document.querySelector("#forecast");
+var forecastContainerEl = document.querySelector("#fiveday-container");
+var pastSearchButtonEl = document.querySelector("#past-search-buttons");
+
+var formSumbitHandler = function (event) {
+    event.preventDefault();
+    var city = cityInputEl.value.trim();
+    if (city) {
+        getCityWeather(city);
+        get5Day(city);
+        cities.unshift({ city });
+        cityInputEl.value = "";
+    } else {
+        alert("Please enter a City");
+    }
+    saveSearch();
+    pastSearch(city);
+}
+
+var saveSearch = function () {
+    localStorage.setItem("cities", JSON.stringify(cities));
+};
+
+var getCityWeather = function (city) {
+    var apiKey = "844421298d794574c100e3409cee0499"
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
+
+    fetch(apiURL)
         .then(function (response) {
-            // THE BELOW CONSOLE LOG WILL SHOW YOU IN THE BROWSER WHAT THE RESPONSE WOULD LOOK LIKE IF I DON'T CONVERT IT INTO JSON!!!!!
-            console.log(response);
-            return response.json();
-        })
+            response.json().then(function (data) {
+                displayWeather(data, city);
+            });
+        });
+};
+
+
+
+
+
 //         .then(function (data) {
-//             console.log(data)
-//             //Loop over the data to generate a table, each table row will have a link to the repo url
-//             for (var i = 0; i < data.length; i++) {
+//         console.log(data)
+
+//         for (var i = 0; i < data.length; i++) {
 //                 // Creating elements, tablerow, tabledata, and anchor
 //                 var createTableRow = document.createElement('tr');
 //                 var tableData = document.createElement('td');
@@ -31,6 +66,6 @@ function getApi() {
 //                 tableBody.appendChild(createTableRow);
 //             }
 //         });
-}
+// }
 
-// fetchButton.addEventListener('click', getApi);
+// fetchBtn.addEventListener('click', getApi);
