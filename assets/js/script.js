@@ -1,71 +1,79 @@
-// var tableBody = document.getElementById('repo-table');
-
+var apiKey = '01ca93f221f7d52fb6c774e5960d91fd';
 var fetchBtn = document.getElementById('fetch-btn');
 
-var cities = [];
+// DEFINE REQUIRED ON-PAGE RESULTS - WEATHER
+var longitude;
+var latitude;
+var city;  
+var date;
+var tempF;
+var wind;
+var humidity;
 
-var searchCardEl = document.querySelector("#search-card");
-var inputCity = document.querySelector("#city");
-var citySearchInputEl = document.querySelector("#searched-city");
-var forecastTitle = document.querySelector("#forecast");
-var forecastContainerEl = document.querySelector("#fiveday-container");
-var pastSearchButtonEl = document.querySelector("#past-search-buttons");
 
-var formSumbitHandler = function (event) {
-    event.preventDefault();
-    var city = cityInputEl.value.trim();
-    if (city) {
-        getCityWeather(city);
-        get5Day(city);
-        cities.unshift({ city });
-        cityInputEl.value = "";
-    } else {
-        alert("Please enter a City");
-    }
-    saveSearch();
-    pastSearch(city);
+// TESTING THAT API IS CONNECTED
+function getCoordinates(cityName){
+   var requestURL= `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=5&appid=${apiKey}`
+    fetch(requestURL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data)
+            if(data.length == 0){
+                alert("Please enter a valid city")
+                return
+            }
+            var myCity = data.find(function(cityInstance){
+                return cityInstance.country == "US"
+            })
+            if(myCity == undefined){
+                myCity = data[0]
+            }
+            saveToStorage(myCity.name)
+            getWeather(myCity.lat, myCity.lon)
+        })
 }
 
-var saveSearch = function () {
-    localStorage.setItem("cities", JSON.stringify(cities));
-};
+function getWeather(lat,lon) {
+    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd`;
 
-var getCityWeather = function (city) {
-    var apiKey = "844421298d794574c100e3409cee0499"
-    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
-
-    fetch(apiURL)
+    fetch(requestURL)
         .then(function (response) {
-            response.json().then(function (data) {
-                displayWeather(data, city);
-            });
-        });
+        console.log(response);
+        return response.json();
+    })
+        .then(function (weather) {
+            console.log(weather);
+        })
 };
 
+//CREATE .JSON ARRAY FOR LOCAL STORAGE
+function saveToStorage(newCity){
+    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
+    dataStore.push(newCity)
+    localStorage.setItem("cities", JSON.stringify(dataStore))
+}
 
+function loadStorage(){
+    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
+    if(dataStore.length == 0){
+        return
+    }
+    //for loop to get the elements in the screen
+    // getCoordinates(innerHTML of that button)
 
+}
 
+function handleUserInput(){
+    //read the text input,
 
-//         .then(function (data) {
-//         console.log(data)
+    //if the text.input.length == 0
 
-//         for (var i = 0; i < data.length; i++) {
-//                 // Creating elements, tablerow, tabledata, and anchor
-//                 var createTableRow = document.createElement('tr');
-//                 var tableData = document.createElement('td');
-//                 var link = document.createElement('a');
+    // getCoordinates(userinputwas)
+}
 
-//                 // Setting the text of link and the href of the link
-//                 link.textContent = data[i].html_url;
-//                 link.href = data[i].html_url;
+// PAGE BUTTON EVENT LISTENERS
 
-//                 // Appending the link to the tabledata and then appending the tabledata to the tablerow
-//                 // The tablerow then gets appended to the tablebody
-//                 tableData.appendChild(link);
-//                 createTableRow.appendChild(tableData);
-//                 tableBody.appendChild(createTableRow);
-//             }
-//         });
-// }
-
-// fetchBtn.addEventListener('click', getApi);
+fetchBtn.addEventListener('click', handleUserInput);
+getCoordinates("Paris")

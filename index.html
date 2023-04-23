@@ -28,7 +28,7 @@
     <!-- HEADER -->
     <header class="container-fluid bg-dark text-light mb-5 p-3">
         <div class="row justify-content-around">
-            <h1 class="col-4">Weather or Not</h1>
+            <h1 class="col-4">Weather • or • Not</h1>
             <h3 class="col-4">Multi-City Weather Outlook</h3>
         </div>
     </header>
@@ -45,7 +45,7 @@
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"></div>
-                            <input id="city" type="text" class="form-control" placeholder="Search" aria-label="search"
+                            <input id="city-input" type="text" class="form-control" placeholder="Search" aria-label="search"
                                 aria-describedby="basic-addon1">
                         </div>
 
@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- SET 5 HORIZONTAL CARDS FOR FORECAST -->
-                    <div class="row">
+                    <div class="row" id="forecast-container">
                         <div class="card" id="forecast-box" style="width: 14rem;">
                             <div class="card-body">
                                 <h5 class="card-title">Date +1</h5>
@@ -129,7 +129,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <!-- Local JS file -->
-    <script src="/assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>

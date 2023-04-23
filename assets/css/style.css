@@ -23,3 +23,7 @@ hr {
     border-bottom: 2px var(--lt-grey);
     color: var(--lt-grey);
 }
+
+h3 {
+    padding-top: 9px;
+}
