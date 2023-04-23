@@ -10,7 +10,7 @@
     color: white;
 }
 
-#search-btn {
+#fetch-btn {
     background-color: var(--periwinkle);
     color: white;
 }
@@ -22,4 +22,8 @@
 hr {
     border-bottom: 2px var(--lt-grey);
     color: var(--lt-grey);
+}
+
+h3 {
+    padding-top: 9px;
 }
