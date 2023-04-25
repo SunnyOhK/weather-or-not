@@ -6,6 +6,7 @@ var cityInput = document.getElementById('city-input');
 
 // DEFINE FIELDS ON DOC FOR APPENDING STORED DATA
 var searchList = document.querySelector('ul');
+var currentCityEl = document.getElementById('city-name');
 
 // DEFINE REQUIRED ON-PAGE RESULTS - WEATHER
 var lon;
@@ -13,7 +14,7 @@ var lat;
 var city;
 var date;
 var tempF;
-var wind;
+var windMPH;
 var humidity;
 var icon;
 
@@ -78,7 +79,6 @@ function loadStorage() {
         return
     }
 
-
     // getCoordinates(innerHTML of that button)
 }
 
@@ -97,7 +97,19 @@ function getWeather(lat, lon) {
         .then(function (weather) {
             console.log(weather);
         })
-    
+
+    var weather = JSON.parse(localStorage.getItem('weather')) || [];
+
+    dataStore.push(weather);
+    localStorage.setItem('weather', JSON.stringify(dataStore));
+
+    console.log(dataStore);
+
+    for (let i = 0; i < weather.length; i++) {
+        var conditions = [weather.temp, weather.dt, weather.wind, weather.humidity];
+
+        console.log(conditions);
+    }
 };
 
 // city name, date, an icon rep of weather conditions, temperature, humidity, and wind speed

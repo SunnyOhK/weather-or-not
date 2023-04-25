@@ -15,6 +15,17 @@
     color: white;
 }
 
+#instruct {
+    font-size: 20px;
+}
+
+#shrink {
+    margin-left: -12em;
+    margin-right: -12em;
+    padding-right: -12em;
+    padding-left: -12em;
+}
+
 #weather-now {
     padding-right: 20rem;
 }
@@ -28,11 +39,31 @@ h3 {
     padding-top: 9px;
 }
 
-ul {
-    list-style-type: none;
+#search-for {
+    font-size: 30px;
+}
+
+#five-day {
+    font-size: 30px;
+    margin-top: 1em;
+    margin-bottom: .5em;
 }
 
 li {
-    font-size: 20px;
-    
+    list-style: none;
+    font-size: 24px;
+}
+
+li:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#city-name {
+    font-size: 36px;
+    color: black;
+}
+
+h6 {
+    font-size: 24px;
 }
