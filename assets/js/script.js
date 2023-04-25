@@ -70,7 +70,7 @@ function saveToStorage(newCity) {
     for (let i = 0; i < dataStore.length; i++) {
         var newCityLi = document.createElement('li');
         newCityLi.innerHTML =
-            `<button>${dataStore[i].name}, ${dataStore.state}</button>`;
+            `<button class="city-li">${dataStore[i].name}, ${dataStore[i].state}</button>`;
         newCityLi.className = 'city-li';
         searchList.appendChild(newCityLi);
     }
