@@ -80,7 +80,7 @@ function getCoordinates(city) {
 
 function saveToStorage(myCity) {
     var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
-    if(dataStore.includes(myCity)){
+    if (dataStore.includes(myCity)) {
         return
     }
     dataStore.push(myCity);
@@ -90,7 +90,7 @@ function saveToStorage(myCity) {
     console.log(dataStore);
 
     //for loop to get the elements in the screen
-  
+
 }
 
 
@@ -112,15 +112,25 @@ function getWeather(lat, lon) {
 };
 
 
-function makeMainCard(weather){
-    var mainEl = document.getElementById("weather-now")
-    mainEl.innerHTML = ` <div class="card-body">
-                            <h5 class="card-title" id="city-name">${weather.name}</h5>
-                            <h6 class="card-subtitle mt-4 mb-3 text-muted" id="temp-now">Temperature: ${weather.main.temp}</h6>
-                            <h6 class="card-subtitle mt-2 mb-3 text-muted" id="wind-now">Wind: ${weather.wind.speed}</h6>
-                            <h6 class="card-subtitle mt-2 mb-3 text-muted" id="humid-now">Humidity: ${weather.main.humidity}</h6>
-                            <i></i>
-                        </div>`
+function makeMainCard(weather) {
+    var mainEl = document.getElementById("weather-now");
+    mainEl.innerHTML =
+        ` <div class="card mb-3" id="weather-now">
+    <div class="row g-0">
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title text-center" id="city-name">${weather.name}</h5>
+
+                <h6 class="card-subtitle mt-4 mb-3 ml-5 text-muted" id="temp-now">Temperature: ${weather.main.temp}</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="wind-now">Wind: ${weather.wind.speed}</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity}</h6>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="img-fluid rounded-end" id="weather-icon" alt="Weather Icon">
+        </div>
+    </div>
+</div> `
     console.log(weather);
 
     console.log(weather.name);
@@ -156,6 +166,17 @@ function getForecast(lat, lon) {
         .then(function (forecast) {
             console.log(forecast)
         })
+
+    var fiveDayEl = document.getElementById("five-day-el");
+    fiveDayEl.innerHTML =
+        `
+        <div class="card ml-1 mr-1" id="forecast-box" style="width: 14rem;">
+            <div class="card-body">
+                <h5 class="card-title">Date +1</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>  
+        </div>`
 };
 
 
@@ -164,7 +185,7 @@ function loadStorage() {
     if (dataStore.length == 0) {
         return
     }
-    searchList.innerHTML= ""
+    searchList.innerHTML = ""
     for (let i = 0; i < dataStore.length; i++) {
         var newCityLi = document.createElement('li');
         newCityLi.innerHTML =
@@ -172,9 +193,9 @@ function loadStorage() {
         newCityLi.className = 'city-li';
         searchList.appendChild(newCityLi);
     }
-    searchList.addEventListener("click", function(event){
+    searchList.addEventListener("click", function (event) {
         console.dir(event.target)
-        if(event.target.nodeName === "BUTTON"){
+        if (event.target.nodeName === "BUTTON") {
             console.dir(event.target)
             getCoordinates(event.target.innerHTML)
         }

@@ -26,8 +26,16 @@
     padding-left: -12em;
 }
 
-#weather-now {
-    padding-right: 20rem;
+#weather-info {
+    
+}
+
+#weather-icon {
+    position: relative;
+    margin-top: 3em;
+    align-content: center;
+    height: 10em;
+    width: auto;
 }
 
 hr {
@@ -74,4 +82,9 @@ h3 {
 
 h6 {
     font-size: 24px;
+}
+
+img {
+    position: relative;
+
 }
