@@ -17,6 +17,7 @@ var tempF;
 var windMPH;
 var humidity;
 var icon;
+var dataStore;
 
 
 function getCoordinates(cityName) {
@@ -62,12 +63,15 @@ function saveToStorage(newCity) {
     dataStore.push(newCity);
     localStorage.setItem('cities', JSON.stringify(dataStore));
     
+    // dataStore shows full list of city searches saved into localStorage as an array
     console.log(dataStore);
 
     //for loop to get the elements in the screen
     for (let i = 0; i < dataStore.length; i++) {
         var newCityLi = document.createElement('li');
-        newCityLi.textContent = dataStore[i].name + ', ' + dataStore[i].state;
+        newCityLi.innerHTML =
+            `<button>${dataStore[i].name}, ${dataStore.state}</button>`;
+        newCityLi.className = 'city-li';
         searchList.appendChild(newCityLi);
     }
 }
@@ -78,14 +82,13 @@ function loadStorage() {
     if (dataStore.length == 0) {
         return
     }
-
-    // getCoordinates(innerHTML of that button)
 }
 
 
 function getWeather(lat, lon) {
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd&units=imperial`;
 
+    // THESE ARE SHOWING CORRECT COORDS FOR DATASTORE[i]
     console.log(lat);
     console.log(lon);
 
@@ -96,20 +99,20 @@ function getWeather(lat, lon) {
         })
         .then(function (weather) {
             console.log(weather);
+
+            // WEATHER = ARRAY OF WEATHER CONDITIONS FOR MOST RECENT CITY SEARCH (DATASTORE[i])
         })
 
     var weather = JSON.parse(localStorage.getItem('weather')) || [];
 
-    dataStore.push(weather);
-    localStorage.setItem('weather', JSON.stringify(dataStore));
+    // dataStore.push(weather);
+    // localStorage.setItem('weather', JSON.stringify(dataStore));
 
-    console.log(dataStore);
+    // console.log(dataStore);
 
-    for (let i = 0; i < weather.length; i++) {
-        var conditions = [weather.temp, weather.dt, weather.wind, weather.humidity];
-
-        console.log(conditions);
-    }
+    // for (let i = 0; i < weather.length; i++) {
+    //     var conditions = [weather.temp, weather.dt, weather.wind, weather.humidity];}
+    
 };
 
 // city name, date, an icon rep of weather conditions, temperature, humidity, and wind speed
