@@ -27,3 +27,12 @@ hr {
 h3 {
     padding-top: 9px;
 }
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    font-size: 20px;
+    
+}

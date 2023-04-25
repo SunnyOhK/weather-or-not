@@ -4,21 +4,25 @@ var searchBtn = document.getElementById('fetch-btn');
 // DEFINE INPUT FIELD
 var cityInput = document.getElementById('city-input');
 
+// DEFINE FIELDS ON DOC FOR APPENDING STORED DATA
+var searchList = document.querySelector('ul');
+
 // DEFINE REQUIRED ON-PAGE RESULTS - WEATHER
-var longitude;
-var latitude;
+var lon;
+var lat;
 var city;
 var date;
 var tempF;
 var wind;
 var humidity;
+var icon;
 
 
 function getCoordinates(cityName) {
 
     // USER WILL INPUT CITY, BUT I NEED TO RETURN COORDINATES IN ORDER TO PROPERLY PERFORM FORECAST RETURN
 
-    var requestURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=10&appid=${apiKey}`;
+    var requestURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=10&appid=${apiKey}&units=imperial`;
 
     fetch(requestURL)
         .then(function (response) {
@@ -35,16 +39,55 @@ function getCoordinates(cityName) {
             var myCity = data.find(function (cityInstance) {
                 return cityInstance.country == "US"
             })
+
             if (myCity == undefined) {
                 myCity = data[0]
             }
-            saveToStorage(myCity.name)
+
+            console.log(myCity);
+            console.log(myCity.name);
+            console.log(myCity.state);
+
+            saveToStorage(myCity)
             getWeather(myCity.lat, myCity.lon)
         })
 }
 
+//CREATE .JSON ARRAY FOR LOCAL STORAGE
+// USE `||` (OR) TO RETRIEVE THE VALUE OF KEY `CITIES` FROM LOCAL STORAGE --> IF THIS VALUE HAS VALUE (AKA. 'TRUTHY'), USE IT. IF FALSY, IT WILL RETURN/ASSIGN AN EMPTY ARRAY
+
+function saveToStorage(newCity) {
+    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
+    dataStore.push(newCity);
+    localStorage.setItem('cities', JSON.stringify(dataStore));
+    
+    console.log(dataStore);
+
+    //for loop to get the elements in the screen
+    for (let i = 0; i < dataStore.length; i++) {
+        var newCityLi = document.createElement('li');
+        newCityLi.textContent = dataStore[i].name + ', ' + dataStore[i].state;
+        searchList.appendChild(newCityLi);
+    }
+}
+
+
+function loadStorage() {
+    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
+    if (dataStore.length == 0) {
+        return
+    }
+
+
+    // getCoordinates(innerHTML of that button)
+}
+
+
 function getWeather(lat, lon) {
-    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd`;
+    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd&units=imperial`;
+
+    console.log(lat);
+    console.log(lon);
 
     fetch(requestURL)
         .then(function (response) {
@@ -54,24 +97,10 @@ function getWeather(lat, lon) {
         .then(function (weather) {
             console.log(weather);
         })
+    
 };
 
-//CREATE .JSON ARRAY FOR LOCAL STORAGE
-function saveToStorage(newCity) {
-    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
-    dataStore.push(newCity)
-    localStorage.setItem("cities", JSON.stringify(dataStore))
-}
-
-function loadStorage() {
-    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
-    if (dataStore.length == 0) {
-        return
-    }
-    //for loop to get the elements in the screen
-    // getCoordinates(innerHTML of that button)
-
-}
+// city name, date, an icon rep of weather conditions, temperature, humidity, and wind speed
 
 function handleUserInput() {
         var cityName = cityInput.value.trim();
