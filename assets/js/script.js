@@ -1,12 +1,17 @@
 var apiKey = '01ca93f221f7d52fb6c774e5960d91fd';
 var searchBtn = document.getElementById('fetch-btn');
+var cityBtn = document.getElementsByClassName('city-li');
 
 // DEFINE INPUT FIELD
 var cityInput = document.getElementById('city-input');
 
 // DEFINE FIELDS ON DOC FOR APPENDING STORED DATA
 var searchList = document.querySelector('ul');
-var currentCityEl = document.getElementById('city-name');
+var cityNameEl = document.getElementById('city-name');
+var tempNowEl = document.getElementById('temp-now');
+var windNowEl = document.getElementById('wind-now');
+var humidNowEl = document.getElementById('humid-now');
+
 
 // DEFINE REQUIRED ON-PAGE RESULTS - WEATHER
 var lon;
@@ -20,11 +25,24 @@ var icon;
 var dataStore;
 
 
-function getCoordinates(cityName) {
+// START BY GETTING INPUT FROM USER ON CITY NAME TO RESEARCH
+function handleUserInput() {
+    var cityName = cityInput.value.trim();
+
+    if (cityName === '') {
+        alert("Please enter a valid city.");
+        return;
+    } else {
+        getCoordinates(cityName);
+    };
+}
+
+
+function getCoordinates(city) {
 
     // USER WILL INPUT CITY, BUT I NEED TO RETURN COORDINATES IN ORDER TO PROPERLY PERFORM FORECAST RETURN
 
-    var requestURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=10&appid=${apiKey}&units=imperial`;
+    var requestURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=10&appid=${apiKey}&units=imperial`;
 
     fetch(requestURL)
         .then(function (response) {
@@ -50,38 +68,29 @@ function getCoordinates(cityName) {
             console.log(myCity.name);
             console.log(myCity.state);
 
-            saveToStorage(myCity)
+            saveToStorage(`${myCity.name}, ${myCity.state}`)
             getWeather(myCity.lat, myCity.lon)
+            getForecast(myCity.lat, myCity.lon)
+
         })
 }
 
 //CREATE .JSON ARRAY FOR LOCAL STORAGE
 // USE `||` (OR) TO RETRIEVE THE VALUE OF KEY `CITIES` FROM LOCAL STORAGE --> IF THIS VALUE HAS VALUE (AKA. 'TRUTHY'), USE IT. IF FALSY, IT WILL RETURN/ASSIGN AN EMPTY ARRAY
 
-function saveToStorage(newCity) {
+function saveToStorage(myCity) {
     var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
-    dataStore.push(newCity);
+    if (dataStore.includes(myCity)) {
+        return
+    }
+    dataStore.push(myCity);
     localStorage.setItem('cities', JSON.stringify(dataStore));
-    
+    loadStorage()
     // dataStore shows full list of city searches saved into localStorage as an array
     console.log(dataStore);
 
     //for loop to get the elements in the screen
-    for (let i = 0; i < dataStore.length; i++) {
-        var newCityLi = document.createElement('li');
-        newCityLi.innerHTML =
-            `<button class="city-li">${dataStore[i].name}, ${dataStore[i].state}</button>`;
-        newCityLi.className = 'city-li';
-        searchList.appendChild(newCityLi);
-    }
-}
 
-
-function loadStorage() {
-    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
-    if (dataStore.length == 0) {
-        return
-    }
 }
 
 
@@ -98,35 +107,102 @@ function getWeather(lat, lon) {
             return response.json();
         })
         .then(function (weather) {
-            console.log(weather);
-
-            // WEATHER = ARRAY OF WEATHER CONDITIONS FOR MOST RECENT CITY SEARCH (DATASTORE[i])
+            makeMainCard(weather)
         })
-
-    var weather = JSON.parse(localStorage.getItem('weather')) || [];
-
-    // dataStore.push(weather);
-    // localStorage.setItem('weather', JSON.stringify(dataStore));
-
-    // console.log(dataStore);
-
-    // for (let i = 0; i < weather.length; i++) {
-    //     var conditions = [weather.temp, weather.dt, weather.wind, weather.humidity];}
-    
 };
 
-// city name, date, an icon rep of weather conditions, temperature, humidity, and wind speed
 
-function handleUserInput() {
-        var cityName = cityInput.value.trim();
+function makeMainCard(weather) {
+    var mainEl = document.getElementById("weather-now");
+    mainEl.innerHTML =
+        ` <div class="card mb-3" id="weather-now">
+    <div class="row g-0">
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title text-center" id="city-name">${weather.name}</h5>
 
-        if (cityName === '') {
-            alert("Please enter a valid city.");
-            return;
-        } else {
-            getCoordinates(cityName);
-        };
+                <h6 class="card-subtitle mt-4 mb-3 ml-5 text-muted" id="temp-now">Temperature: ${weather.main.temp}</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="wind-now">Wind: ${weather.wind.speed}</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity}</h6>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="img-fluid rounded-end" id="weather-icon" alt="Weather Icon">
+        </div>
+    </div>
+</div> `
+    console.log(weather);
+
+    console.log(weather.name);
+
+    console.log(weather.wind.speed);
+
+    console.log(weather.dt);
+
+    console.log(weather.weather[0].description);
+
+    console.log(weather.weather[0].icon);
+
+    console.log(weather.main.temp);
+
+    console.log(weather.main.humidity);
+
+
+}
+
+
+function getForecast(lat, lon) {
+    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd&units=imperial`;
+
+    // THESE ARE SHOWING CORRECT COORDS FOR DATASTORE[i]
+    console.log(lat);
+    console.log(lon);
+
+    fetch(requestURL)
+        .then(function (response) {
+            console.log(response);
+            return response.json();
+        })
+        .then(function (forecast) {
+            console.log(forecast)
+        })
+
+    var fiveDayEl = document.getElementById("five-day-el");
+    fiveDayEl.innerHTML =
+        `
+        <div class="card ml-1 mr-1" id="forecast-box" style="width: 14rem;">
+            <div class="card-body">
+                <h5 class="card-title">Date +1</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>  
+        </div>`
+};
+
+
+function loadStorage() {
+    var dataStore = JSON.parse(localStorage.getItem('cities')) || [];
+    if (dataStore.length == 0) {
+        return
     }
+    searchList.innerHTML = ""
+    for (let i = 0; i < dataStore.length; i++) {
+        var newCityLi = document.createElement('li');
+        newCityLi.innerHTML =
+            `<button class="city-li">${dataStore[i]}</button>`;
+        newCityLi.className = 'city-li';
+        searchList.appendChild(newCityLi);
+    }
+    searchList.addEventListener("click", function (event) {
+        console.dir(event.target)
+        if (event.target.nodeName === "BUTTON") {
+            console.dir(event.target)
+            getCoordinates(event.target.innerHTML)
+        }
+    })
+}
 
 // PAGE BUTTON EVENT LISTENERS
 searchBtn.addEventListener('click', handleUserInput);
+loadStorage()
+// cityBtn.addEventListener('click', getCoordinates);
