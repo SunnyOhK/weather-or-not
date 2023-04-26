@@ -26,10 +26,6 @@
     padding-left: -12em;
 }
 
-#weather-info {
-    
-}
-
 #weather-icon {
     position: relative;
     margin-top: 3em;
@@ -87,4 +83,18 @@ h6 {
 img {
     position: relative;
 
+}
+
+#card-style {
+    background-color: var(--grey-blue);
+    color: white;
+    width: 14rem;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#card-icon {
+    margin-left: 4em;
+    width: 40%;
+    
 }
