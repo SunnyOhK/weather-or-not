@@ -105,6 +105,7 @@ function getWeather(lat, lon) {
             return response.json();
         })
         .then(function (weather) {
+            console.log(weather);
             makeMainCard(weather)
         })
 };
@@ -116,15 +117,16 @@ function makeMainCard(weather) {
         `<div class="row g-0">
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title text-center" id="city-name">${weather.name}</h5>
-
+                <h5 class="card-title text-center" id="city-name">${weather.name}&emsp;&emsp;&emsp;&emsp;&emsp;${new Date(weather.dt * 1000).toLocaleDateString()}</h5>
                 <h6 class="card-subtitle mt-4 mb-3 ml-5 text-muted" id="temp-now">Temperature: ${weather.main.temp} °F</h6>
                 <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="wind-now">Wind: ${weather.wind.speed} mph</h6>
                 <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity} %</h6>
             </div>
         </div>
         <div class="col-md-4">
-            <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="img-fluid rounded-end" id="weather-icon" alt="Weather Icon">
+            <div class="img-fluid rounded-end" id="card-right">
+            <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" id="weather-icon" alt="Weather Icon">
+            </div>
         </div>
     </div>`
 }
@@ -150,7 +152,7 @@ function getForecast(lat, lon) {
 
 
 // OPENWEATHERMAP RETURNS ARRAY QTY 40 SO I WILL NEED TO CALCULATE FOR EVERY 8TH INSTANCE
-// forecast.list[8], forecast.list[16], forecast.list[24], forecast.list[32], forecast.list[40]
+// forecast.list[7], forecast.list[16], forecast.list[24], forecast.list[32], forecast.list[40]
 // REFERENCE SHOULD BE SAME (just change weather --> forecast.list[i])... forecast.list[].main.temp
 
 function makeForecastCards(forecast) {
@@ -172,7 +174,6 @@ function makeForecastCards(forecast) {
         forecastCard.setAttribute('id', 'card-style');
         fiveDayEl.appendChild(forecastCard);
     }
-
 };
 
 

@@ -5,6 +5,13 @@
 
 }
 
+.bg-image {
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 #forecast-box {
     background-color: var(--grey-blue);
     color: white;
@@ -26,14 +33,6 @@
     padding-left: -12em;
 }
 
-#weather-icon {
-    position: relative;
-    margin-top: 3em;
-    align-content: center;
-    height: 10em;
-    width: auto;
-}
-
 hr {
     border-bottom: 2px var(--lt-grey);
     color: var(--lt-grey);
@@ -49,8 +48,10 @@ h3 {
 
 #five-day {
     font-size: 30px;
+    background-color: rgba(250, 235, 215, 0.726);
     margin-top: 1em;
     margin-bottom: .5em;
+    padding-left: .5em;
 }
 
 #search-results {
@@ -78,6 +79,22 @@ h3 {
 
 h6 {
     font-size: 24px;
+}
+
+#card-right {
+    position: relative;
+    background-color: #B78CA6;
+    height: 257px;
+    border: 3px solid #404F64;
+    margin-top: -1px;
+}
+
+#weather-icon {
+    position: relative;
+    align-content: center;
+    height: 6em;
+    margin-left: 7em;
+    margin-top: 5em;
 }
 
 img {
