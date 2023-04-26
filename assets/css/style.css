@@ -72,6 +72,7 @@ h3 {
     border: none !important;
     background-color: white !important;
     list-style: none;
+    text-align: center;
 }
 
 #city-li:hover {
