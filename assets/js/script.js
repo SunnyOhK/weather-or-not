@@ -200,7 +200,7 @@ function loadStorage() {
         newCityLi.innerHTML =
             `<button class="city-li">${dataStore[i]}</button>`;
         newCityLi.className = 'city-li';
-        searchList.appendChild(newCityLi);
+        searchList.prepend(newCityLi);
     }
     searchList.addEventListener("click", function (event) {
         console.dir(event.target)
