@@ -37,6 +37,7 @@ function handleUserInput(event) {
         return;
     } else {
         getCoordinates(cityName);
+        cityInput.value = '';
     };
 }
 
@@ -118,6 +119,11 @@ function makeMainCard(weather) {
     var mainEl = document.getElementById("weather-now");
     mainEl.innerHTML = '';
 
+    // I want to capitalize the first letter of the weather description so...
+    // ChatGPT helped on this
+    var weatherDesc = weather.weather[0].description;
+    var capWeatherDesc = weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1);
+
     mainEl.innerHTML =
         `<div class="row g-0">
         <div class="col-md-8">
@@ -131,7 +137,7 @@ function makeMainCard(weather) {
         <div class="card" id="icon-card" style="width: 18rem;">
             <img class="card-img-top" id="weather-icon" src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" alt="Weather Icon">
             <div class="card-body">
-            <p class="card-text">${weather.weather[0].description}</p>
+            <p class="card-text" id="desc"><b>${capWeatherDesc}</b></p>
             </div>
         </div>
         </div>`
