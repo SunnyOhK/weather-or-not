@@ -2,6 +2,7 @@
     --grey-blue: #404F64;
     --periwinkle: #8F99FB;
     --lt-grey: #7b7b7b;
+    --dk-grey: #343A40;
 
 }
 
@@ -13,7 +14,7 @@
 }
 
 #forecast-box {
-    background-color: var(--grey-blue);
+    background-color: var(--dk-grey);
     color: white;
 }
 
@@ -24,6 +25,12 @@
 
 #instruct {
     font-size: 20px;
+}
+
+#clear-btn {
+    border-radius: 0%;
+    font-size: 22px;
+    border-top: 2px solid #7b7b7b;
 }
 
 #shrink {

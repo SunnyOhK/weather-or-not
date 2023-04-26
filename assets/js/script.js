@@ -1,6 +1,7 @@
 var apiKey = `01ca93f221f7d52fb6c774e5960d91fd`;
 var searchBtn = document.getElementById('fetch-btn');
 var cityBtn = document.getElementsByClassName('city-li');
+var clearBtn = document.getElementById('clear-btn');
 
 // DEFINE INPUT FIELD
 var cityInput = document.getElementById('city-input');
@@ -197,8 +198,17 @@ function loadStorage() {
             getCoordinates(event.target.innerHTML)
         }
     })
+};
+
+function clearList() {
+    // FIRST CLEAR LOCAL STORAGE
+    localStorage.clear();
+
+    // THEN CLEAR THE EXISTING SCORES FROM THE PAGE
+    searchList.innerHTML = '';
 }
 
 // PAGE BUTTON EVENT LISTENERS
 searchBtn.addEventListener('click', handleUserInput);
+clearBtn.addEventListener('click', clearList);
 loadStorage();
