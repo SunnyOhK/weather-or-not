@@ -56,3 +56,19 @@ weather
 wind
 :
 { speed: 1.99, deg: 140, gust: 7 }
+
+console.log(weather);
+
+console.log(weather.name);
+
+console.log(weather.wind.speed);
+
+console.log(weather.dt);
+
+console.log(weather.weather[0].description);
+
+console.log(weather.weather[0].icon);
+
+console.log(weather.main.temp);
+
+console.log(weather.main.humidity);

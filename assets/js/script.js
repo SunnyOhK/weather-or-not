@@ -1,4 +1,4 @@
-var apiKey = '01ca93f221f7d52fb6c774e5960d91fd';
+var apiKey = `01ca93f221f7d52fb6c774e5960d91fd`;
 var searchBtn = document.getElementById('fetch-btn');
 var cityBtn = document.getElementsByClassName('city-li');
 
@@ -39,7 +39,6 @@ function handleUserInput() {
 
 
 function getCoordinates(city) {
-
     // USER WILL INPUT CITY, BUT I NEED TO RETURN COORDINATES IN ORDER TO PROPERLY PERFORM FORECAST RETURN
 
     var requestURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=10&appid=${apiKey}&units=imperial`;
@@ -68,10 +67,9 @@ function getCoordinates(city) {
             console.log(myCity.name);
             console.log(myCity.state);
 
-            saveToStorage(`${myCity.name}, ${myCity.state}`)
-            getWeather(myCity.lat, myCity.lon)
-            getForecast(myCity.lat, myCity.lon)
-
+            saveToStorage(`${myCity.name}, ${myCity.state}`);
+            getWeather(myCity.lat, myCity.lon);
+            getForecast(myCity.lat, myCity.lon);
         })
 }
 
@@ -95,13 +93,13 @@ function saveToStorage(myCity) {
 
 
 function getWeather(lat, lon) {
-    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd&units=imperial`;
+    var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
     // THESE ARE SHOWING CORRECT COORDS FOR DATASTORE[i]
     console.log(lat);
     console.log(lon);
 
-    fetch(requestURL)
+    fetch(weatherURL)
         .then(function (response) {
             console.log(response);
             return response.json();
@@ -115,68 +113,66 @@ function getWeather(lat, lon) {
 function makeMainCard(weather) {
     var mainEl = document.getElementById("weather-now");
     mainEl.innerHTML =
-        ` <div class="card mb-3" id="weather-now">
-    <div class="row g-0">
+        `<div class="row g-0">
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title text-center" id="city-name">${weather.name}</h5>
 
-                <h6 class="card-subtitle mt-4 mb-3 ml-5 text-muted" id="temp-now">Temperature: ${weather.main.temp}</h6>
-                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="wind-now">Wind: ${weather.wind.speed}</h6>
-                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity}</h6>
+                <h6 class="card-subtitle mt-4 mb-3 ml-5 text-muted" id="temp-now">Temperature: ${weather.main.temp} °F</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="wind-now">Wind: ${weather.wind.speed} mph</h6>
+                <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity} %</h6>
             </div>
         </div>
         <div class="col-md-4">
             <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" class="img-fluid rounded-end" id="weather-icon" alt="Weather Icon">
         </div>
-    </div>
-</div> `
-    console.log(weather);
-
-    console.log(weather.name);
-
-    console.log(weather.wind.speed);
-
-    console.log(weather.dt);
-
-    console.log(weather.weather[0].description);
-
-    console.log(weather.weather[0].icon);
-
-    console.log(weather.main.temp);
-
-    console.log(weather.main.humidity);
-
-
+    </div>`
 }
 
 
 function getForecast(lat, lon) {
-    var requestURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=01ca93f221f7d52fb6c774e5960d91fd&units=imperial`;
+    var forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
     // THESE ARE SHOWING CORRECT COORDS FOR DATASTORE[i]
     console.log(lat);
     console.log(lon);
 
-    fetch(requestURL)
+    fetch(forecastURL)
         .then(function (response) {
             console.log(response);
             return response.json();
         })
         .then(function (forecast) {
-            console.log(forecast)
+            console.log(forecast);
+            makeForecastCards(forecast);
         })
+}
 
-    var fiveDayEl = document.getElementById("five-day-el");
-    fiveDayEl.innerHTML =
-        `
-        <div class="card ml-1 mr-1" id="forecast-box" style="width: 14rem;">
+
+// OPENWEATHERMAP RETURNS ARRAY QTY 40 SO I WILL NEED TO CALCULATE FOR EVERY 8TH INSTANCE
+// forecast.list[8], forecast.list[16], forecast.list[24], forecast.list[32], forecast.list[40]
+// REFERENCE SHOULD BE SAME (just change weather --> forecast.list[i])... forecast.list[].main.temp
+
+function makeForecastCards(forecast) {
+    var fiveDayEl = document.getElementById('five-day-box');
+    
+
+    for (let i = 7; i <= forecast.list.length; i+=8) {
+        var forecastCard = document.createElement('div');        
+        forecastCard.innerHTML =
+            `<img src="http://openweathermap.org/img/w/${forecast.list[i].weather[0].icon}.png" class="card-img-top" id="card-icon" alt="Weather Icon">
             <div class="card-body">
-                <h5 class="card-title">Date +1</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>  
-        </div>`
+            <h5 class="card-title">${new Date(forecast.list[i].dt * 1000).toLocaleDateString()}</h5>
+            <p class="card-text">Temp: ${forecast.list[i].main.temp} °F</p>
+            <p class="card-text">Wind: ${forecast.list[i].wind.speed} mph</p>
+            <p class="card-text">Humidity: ${forecast.list[i].main.humidity} %</p>
+            </div>`;
+
+        forecastCard.className = 'card';
+        forecastCard.setAttribute('id', 'card-style');
+        fiveDayEl.appendChild(forecastCard);
+    }
+
 };
 
 
@@ -204,5 +200,4 @@ function loadStorage() {
 
 // PAGE BUTTON EVENT LISTENERS
 searchBtn.addEventListener('click', handleUserInput);
-loadStorage()
-// cityBtn.addEventListener('click', getCoordinates);
+loadStorage();
