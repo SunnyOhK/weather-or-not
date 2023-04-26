@@ -25,6 +25,7 @@
 
 #instruct {
     font-size: 20px;
+    text-align: center;
 }
 
 #clear-btn {
@@ -62,8 +63,10 @@ h3 {
 }
 
 #search-results {
+    display: flex;
     color: black;
     font-size: 30px;
+    justify-content: center;
 }
 
 .city-li {
@@ -90,7 +93,7 @@ h6 {
 }
 
 .card-text {
-    text-align: left;
+    text-align: center;
     font-size: 22px;
     padding-bottom: -10px;
     padding-top: -8px;
@@ -123,6 +126,10 @@ img {
     width: 14rem;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+#sm-card-text {
+    text-align: left;
 }
 
 #small-date {
