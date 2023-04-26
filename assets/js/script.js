@@ -177,9 +177,9 @@ function makeForecastCards(forecast) {
             `<img src="http://openweathermap.org/img/w/${forecast.list[i].weather[0].icon}.png" class="card-img-top" id="card-icon" alt="Weather Icon">
             <div class="card-body">
             <h5 class="card-title" id="small-date">${new Date(forecast.list[i].dt * 1000).toLocaleDateString()}</h5><br>
-            <p class="card-text">Temp: ${forecast.list[i].main.temp} °F</p>
-            <p class="card-text">Wind: ${forecast.list[i].wind.speed} mph</p>
-            <p class="card-text">Humidity: ${forecast.list[i].main.humidity} %</p>
+            <p class="card-text" id="sm-card-text">Temp: ${forecast.list[i].main.temp} °F</p>
+            <p class="card-text" id="sm-card-text">Wind: ${forecast.list[i].wind.speed} mph</p>
+            <p class="card-text" id="sm-card-text">Humidity: ${forecast.list[i].main.humidity} %</p>
             </div>`;
 
         forecastCard.className = 'card';
