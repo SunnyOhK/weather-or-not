@@ -1,6 +1,6 @@
 # Weather • or • Not
 
-This application generates the current weather and 5-day forecast for a city of your choosing! The only input required is a city name, and the site will handle the rest. City searches have been set to default to the most common US city matches, but if you type a name not recognized within the US, it will search abroad! 
+This application generates the current weather and 5-day forecast for a city of your choosing! The only input required is a city name, and the site will handle the rest. City searches will default to the most common US city match, but if you type a name not recognized within the US, it will search abroad! 
 
 
 ## Installation 

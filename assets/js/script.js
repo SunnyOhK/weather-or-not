@@ -27,7 +27,9 @@ var dataStore;
 
 
 // START BY GETTING INPUT FROM USER ON CITY NAME TO RESEARCH
-function handleUserInput() {
+function handleUserInput(event) {
+    event.preventDefault();
+
     var cityName = cityInput.value.trim();
 
     if (cityName === '') {
@@ -114,6 +116,8 @@ function getWeather(lat, lon) {
 
 function makeMainCard(weather) {
     var mainEl = document.getElementById("weather-now");
+    mainEl.innerHTML = '';
+
     mainEl.innerHTML =
         `<div class="row g-0">
         <div class="col-md-8">
@@ -124,12 +128,13 @@ function makeMainCard(weather) {
                 <h6 class="card-subtitle mt-2 mb-3 ml-5 text-muted" id="humid-now">Humidity: ${weather.main.humidity} %</h6>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="img-fluid rounded-end" id="card-right">
-            <img src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" id="weather-icon" alt="Weather Icon">
+        <div class="card" id="icon-card" style="width: 18rem;">
+            <img class="card-img-top" id="weather-icon" src="http://openweathermap.org/img/w/${weather.weather[0].icon}.png" alt="Weather Icon">
+            <div class="card-body">
+            <p class="card-text">${weather.weather[0].description}</p>
             </div>
         </div>
-    </div>`
+        </div>`
 }
 
 
@@ -158,14 +163,14 @@ function getForecast(lat, lon) {
 
 function makeForecastCards(forecast) {
     var fiveDayEl = document.getElementById('five-day-box');
-    
+    fiveDayEl.innerHTML = '';
 
-    for (let i = 7; i <= forecast.list.length; i+=8) {
-        var forecastCard = document.createElement('div');        
+    for (let i = 7; i <= forecast.list.length; i += 8) {
+        var forecastCard = document.createElement('div');
         forecastCard.innerHTML =
             `<img src="http://openweathermap.org/img/w/${forecast.list[i].weather[0].icon}.png" class="card-img-top" id="card-icon" alt="Weather Icon">
             <div class="card-body">
-            <h5 class="card-title">${new Date(forecast.list[i].dt * 1000).toLocaleDateString()}</h5>
+            <h5 class="card-title" id="small-date">${new Date(forecast.list[i].dt * 1000).toLocaleDateString()}</h5><br>
             <p class="card-text">Temp: ${forecast.list[i].main.temp} °F</p>
             <p class="card-text">Wind: ${forecast.list[i].wind.speed} mph</p>
             <p class="card-text">Humidity: ${forecast.list[i].main.humidity} %</p>

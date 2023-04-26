@@ -88,20 +88,28 @@ h6 {
     font-size: 24px;
 }
 
-#card-right {
+.card-text {
+    text-align: center;
+    font-size: 25px;
+    padding-bottom: -10px;
+    padding-top: -4px;
+}
+
+#icon-card {
     position: relative;
     background-color: #B78CA6;
     height: 257px;
     border: 3px solid #404F64;
-    margin-top: -1px;
 }
+
 
 #weather-icon {
     position: relative;
     align-content: center;
-    height: 6em;
-    margin-left: 7em;
-    margin-top: 5em;
+    height: 7em;
+    width: 7em;
+    margin-left: 5.5em;
+    margin-top: 3em;
 }
 
 img {
@@ -117,8 +125,12 @@ img {
     margin-right: 10px;
 }
 
+#small-date {
+    font-size: 24px;
+    font-weight: bold;
+}
+
 #card-icon {
     margin-left: 4em;
     width: 40%;
-    
 }
